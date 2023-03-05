@@ -2,7 +2,6 @@
 package minesweeper;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagLayout;
@@ -17,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 public class Menu extends JPanel implements ActionListener{
     
@@ -35,12 +35,12 @@ public class Menu extends JPanel implements ActionListener{
         
         this.padre = padre;
         
-        setPreferredSize(new Dimension(getWidth(), getHeight()));
+        //setPreferredSize(new Dimension(getWidth(), getHeight()));
         //setBackground(Color.red);
         
         //setLayout(new BorderLayout(0, 0));
         
-        JPanel main = new JPanel(new GridLayout(4, 1, 0, 0));
+        JPanel main = new JPanel(new GridLayout(4, 1, 0, 30));
         
         JPanel panelTitolo = new JPanel();
         titolo = new JLabel("minesweeper");
@@ -58,11 +58,11 @@ public class Menu extends JPanel implements ActionListener{
         panelTextSelezione.add(textSelezione);
         sel.add(panelTextSelezione);
         
-        String[] difficolta = {"facile", "medio", "difficile", "personalizzata"};
+        String[] difficolta = {"facile", "media", "difficile", "personalizzata"};
         JPanel panelSelezione = new JPanel();
         selezione = new JComboBox<>(difficolta);
         //selezione.setBounds(100, 100, 150, 100);
-        selezione.setPreferredSize(new Dimension(400, 40));
+        selezione.setPreferredSize(new Dimension(300, 40));
         selezione.addActionListener(this);
         panelSelezione.add(selezione);
         
@@ -85,7 +85,7 @@ public class Menu extends JPanel implements ActionListener{
         
         numBombe = new JLabel("numero di bombe: ");
         numBombe.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 18));
-        numBombeField = new JTextField("18");
+        numBombeField = new JTextField("32");
         numBombeField.setPreferredSize(new Dimension(60, 30));
         numBombeField.setEditable(false);
         
@@ -102,12 +102,10 @@ public class Menu extends JPanel implements ActionListener{
         JPanel panelButton = new JPanel();
         avvia = new JButton("avvia");
         avvia.addActionListener(this);
-        panelButton.setPreferredSize(new Dimension(50, 20));
        
         panelButton.add(avvia);
         
         main.add(avvia);
-        
         
         add(main);
 
@@ -157,6 +155,10 @@ public class Menu extends JPanel implements ActionListener{
             if(Pattern.matches("[a-zA-Z]+", numBombeField.getText()) == false){
                 num = Integer.parseInt(numBombeField.getText());
             }else{
+                return;
+            }
+            
+            if(dim < 6 || num < 1 || num >= (dim*dim)/3 || dim > 70){
                 return;
             }
             
